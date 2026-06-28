@@ -1,279 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>svg blend</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #0a0a0a;
-    color: #e0e0e0;
-    font-family: 'Courier New', monospace;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 1rem;
-  }
-  h1 {
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #555;
-    margin-bottom: 2rem;
-  }
-  #search-row {
-    display: flex;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 480px;
-    margin-bottom: 1.5rem;
-  }
-  input {
-    flex: 1;
-    background: #111;
-    border: 1px solid #333;
-    color: #e0e0e0;
-    padding: 0.6rem 0.8rem;
-    font-family: inherit;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  input:focus { border-color: #666; }
-  button {
-    background: #1a1a1a;
-    border: 1px solid #444;
-    color: #ccc;
-    padding: 0.6rem 1.2rem;
-    font-family: inherit;
-    font-size: 0.85rem;
-    cursor: pointer;
-    letter-spacing: 0.1em;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  button:hover { background: #222; border-color: #666; }
-  button:disabled { opacity: 0.3; cursor: default; }
-  #controls {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.75rem;
-    color: #555;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  #controls label { display: flex; flex-direction: column; gap: 0.3rem; align-items: center; }
-  select {
-    background: #111;
-    border: 1px solid #333;
-    color: #999;
-    padding: 0.3rem 0.5rem;
-    font-family: inherit;
-    font-size: 0.75rem;
-    outline: none;
-  }
-  #canvas {
-    width: 480px;
-    height: 480px;
-    max-width: 100%;
-    background: #0f0f0f;
-    border: 1px solid #1e1e1e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  #canvas svg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-  #thumbs {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-    max-width: 480px;
-    width: 100%;
-  }
-  .thumb-wrap { flex: 1; display: flex; flex-direction: column; }
-  .thumb {
-    aspect-ratio: 1;
-    border: 1px solid #1e1e1e;
-    overflow: hidden;
-    background: #0f0f0f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .thumb img { width: 100%; height: 100%; object-fit: contain; }
-  .thumb-label {
-    font-size: 0.6rem;
-    color: #333;
-    letter-spacing: 0.05em;
-    margin-top: 0.3rem;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  #status {
-    margin-top: 1rem;
-    font-size: 0.7rem;
-    color: #444;
-    letter-spacing: 0.1em;
-    min-height: 1rem;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>svg blend</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    #search-row {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 480px;
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      flex: 1;
+      background: #111;
+      border: 1px solid #333;
+      color: #e0e0e0;
+      padding: 0.6rem 0.8rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #666;
+    }
+
+    button {
+      background: #1a1a1a;
+      border: 1px solid #444;
+      color: #ccc;
+      padding: 0.6rem 1.2rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    button:hover {
+      background: #222;
+      border-color: #666;
+    }
+
+    button:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    #controls {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.75rem;
+      color: #555;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #controls label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    select {
+      background: #111;
+      border: 1px solid #333;
+      color: #999;
+      padding: 0.3rem 0.5rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      outline: none;
+    }
+
+    #canvas {
+      width: 480px;
+      height: 480px;
+      max-width: 100%;
+      background: #0f0f0f;
+      border: 1px solid #1e1e1e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #canvas svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    #thumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .thumb-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumb {
+      aspect-ratio: 1;
+      border: 1px solid #1e1e1e;
+      overflow: hidden;
+      background: #0f0f0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .thumb-label {
+      font-size: 0.6rem;
+      color: #333;
+      letter-spacing: 0.05em;
+      margin-top: 0.3rem;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #status {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: #444;
+      letter-spacing: 0.1em;
+      min-height: 1rem;
+      text-align: center;
+    }
+
+  </style>
 </head>
+
 <body>
 
-<h1>wikimedia blend</h1>
+  <h1>wikimedia blend</h1>
 
-<div id="search-row">
-  <input id="q" type="text" placeholder="search commons..." value="sun moon">
-  <button id="btn">blend</button>
-</div>
+  <div id="search-row">
+    <input id="q" type="text" placeholder="search commons..." value="sun moon">
+    <button id="btn">blend</button>
+  </div>
 
-<div id="controls">
-  <label>blend mode
-    <select id="blend-mode">
-      <option value="screen">screen</option>
-      <option value="multiply">multiply</option>
-      <option value="overlay">overlay</option>
-      <option value="difference">difference</option>
-      <option value="color-dodge">color-dodge</option>
-      <option value="hard-light">hard-light</option>
-      <option value="luminosity">luminosity</option>
-    </select>
-  </label>
-  <label>split
-    <select id="opacity">
-      <option value="0.5">50/50</option>
-      <option value="0.3">70/30</option>
-      <option value="0.7">30/70</option>
-    </select>
-  </label>
-  <label>seed fx
-    <select id="seed-mode">
-      <option value="on">on</option>
-      <option value="off">off</option>
-    </select>
-  </label>
-</div>
+  <div id="controls">
+    <label>blend mode
+      <select id="blend-mode">
+        <option value="screen">screen</option>
+        <option value="multiply">multiply</option>
+        <option value="overlay">overlay</option>
+        <option value="difference">difference</option>
+        <option value="color-dodge">color-dodge</option>
+        <option value="hard-light">hard-light</option>
+        <option value="luminosity">luminosity</option>
+      </select>
+    </label>
+    <label>split
+      <select id="opacity">
+        <option value="0.5">50/50</option>
+        <option value="0.3">70/30</option>
+        <option value="0.7">30/70</option>
+      </select>
+    </label>
+    <label>seed fx
+      <select id="seed-mode">
+        <option value="on">on</option>
+        <option value="off">off</option>
+      </select>
+    </label>
+  </div>
 
-<div id="canvas">
-  <span style="color:#222;font-size:0.7rem;letter-spacing:0.2em">awaiting query</span>
-</div>
+  <div id="canvas">
+    <span style="color:#222;font-size:0.7rem;letter-spacing:0.2em">awaiting query</span>
+  </div>
 
-<div id="thumbs"></div>
-<div id="status"></div>
+  <div id="thumbs"></div>
+  <div id="status"></div>
 
-<script>
-const $ = id => document.getElementById(id);
+  <script>
+    const $ = id => document.getElementById(id);
 
-function djb2(str) {
-  let h = 5381;
-  for (let i = 0; i < str.length; i++) h = ((h << 5) + h) ^ str.charCodeAt(i);
-  return h >>> 0;
-}
+    function djb2(str) {
+      let h = 5381;
+      for (let i = 0; i < str.length; i++) h = ((h << 5) + h) ^ str.charCodeAt(i);
+      return h >>> 0;
+    }
 
-function seedTransform(query) {
-  const s = djb2(query);
-  return {
-    hue: s % 360,
-    rotate: ((s >> 8) % 30) - 15,
-    scale: 1 + ((s >> 16) % 20) / 100,
-    sat: 0.8 + ((s >> 4) % 40) / 100
-  };
-}
+    function seedTransform(query) {
+      const s = djb2(query);
+      return {
+        hue: s % 360,
+        rotate: ((s >> 8) % 30) - 15,
+        scale: 1 + ((s >> 16) % 20) / 100,
+        sat: 0.8 + ((s >> 4) % 40) / 100
+      };
+    }
 
-function setStatus(msg) { $('status').textContent = msg; }
+    function setStatus(msg) {
+      $('status').textContent = msg;
+    }
 
-async function searchCommons(query) {
-  const url = `https://commons.wikimedia.org/w/api.php?origin=*&action=query&list=search&srnamespace=6&srsearch=${encodeURIComponent(query)}+filetype:bitmap|drawing&srlimit=6&format=json`;
-  const res = await fetch(url);
-  const data = await res.json();
-  return data.query.search.map(r => r.title);
-}
+    async function searchCommons(query) {
+      const url = `https://commons.wikimedia.org/w/api.php?origin=*&action=query&list=search&srnamespace=6&srsearch=${encodeURIComponent(query)}+filetype:bitmap|drawing&srlimit=6&format=json`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.query.search.map(r => r.title);
+    }
 
-async function getImageURL(title) {
-  const url = `https://commons.wikimedia.org/w/api.php?origin=*&action=query&titles=${encodeURIComponent(title)}&prop=imageinfo&iiprop=url|mediatype&format=json`;
-  const res = await fetch(url);
-  const data = await res.json();
-  const pages = Object.values(data.query.pages);
-  const info = pages[0]?.imageinfo?.[0];
-  return info ? { url: info.url, title } : null;
-}
+    async function getImageURL(title) {
+      const url = `https://commons.wikimedia.org/w/api.php?origin=*&action=query&titles=${encodeURIComponent(title)}&prop=imageinfo&iiprop=url|mediatype&format=json`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const pages = Object.values(data.query.pages);
+      const info = pages[0]?.imageinfo?.[0];
+      return info ? {
+        url: info.url,
+        title
+      } : null;
+    }
 
-async function blend() {
-  const query = $('q').value.trim();
-  if (!query) return;
+    async function blend() {
+      const query = $('q').value.trim();
+      if (!query) return;
 
-  $('btn').disabled = true;
-  $('canvas').innerHTML = '';
-  $('thumbs').innerHTML = '';
-  setStatus('searching commons...');
+      $('btn').disabled = true;
+      $('canvas').innerHTML = '';
+      $('thumbs').innerHTML = '';
+      setStatus('searching commons...');
 
-  try {
-    const titles = await searchCommons(query);
-    if (titles.length < 2) { setStatus('not enough results'); $('btn').disabled = false; return; }
+      try {
+        const titles = await searchCommons(query);
+        if (titles.length < 2) {
+          setStatus('not enough results');
+          $('btn').disabled = false;
+          return;
+        }
 
-    setStatus('fetching image info...');
-    const infos = (await Promise.all(titles.map(getImageURL))).filter(Boolean);
-    if (infos.length < 2) { setStatus('could not resolve image URLs'); $('btn').disabled = false; return; }
+        setStatus('fetching image info...');
+        const infos = (await Promise.all(titles.map(getImageURL))).filter(Boolean);
+        if (infos.length < 2) {
+          setStatus('could not resolve image URLs');
+          $('btn').disabled = false;
+          return;
+        }
 
-    const [a, b] = infos;
-    const blendMode = $('blend-mode').value;
-    const op = parseFloat($('opacity').value);
-    const useSeed = $('seed-mode').value === 'on';
-    const t = useSeed ? seedTransform(query) : { hue: 0, rotate: 0, scale: 1, sat: 1 };
+        const [a, b] = infos;
+        const blendMode = $('blend-mode').value;
+        const op = parseFloat($('opacity').value);
+        const useSeed = $('seed-mode').value === 'on';
+        const t = useSeed ? seedTransform(query) : {
+          hue: 0,
+          rotate: 0,
+          scale: 1,
+          sat: 1
+        };
 
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', '0 0 100 100');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-    svg.style.cssText = `filter:hue-rotate(${t.hue}deg) saturate(${t.sat});transform:rotate(${t.rotate}deg) scale(${t.scale})`;
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+        svg.style.cssText = `filter:hue-rotate(${t.hue}deg) saturate(${t.sat});transform:rotate(${t.rotate}deg) scale(${t.scale})`;
 
-    const mkImg = (href, opacity, blendMode) => {
-      const img = document.createElementNS(svgNS, 'image');
-      img.setAttribute('href', href);
-      img.setAttribute('x', '0');
-      img.setAttribute('y', '0');
-      img.setAttribute('width', '100');
-      img.setAttribute('height', '100');
-      img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-      img.style.opacity = opacity;
-      if (blendMode) img.style.mixBlendMode = blendMode;
-      return img;
-    };
+        const mkImg = (href, opacity, blendMode) => {
+          const img = document.createElementNS(svgNS, 'image');
+          img.setAttribute('href', href);
+          img.setAttribute('x', '0');
+          img.setAttribute('y', '0');
+          img.setAttribute('width', '100');
+          img.setAttribute('height', '100');
+          img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+          img.style.opacity = opacity;
+          if (blendMode) img.style.mixBlendMode = blendMode;
+          return img;
+        };
 
-    svg.appendChild(mkImg(a.url, 1 - op, null));
-    svg.appendChild(mkImg(b.url, op, blendMode));
-    $('canvas').appendChild(svg);
+        svg.appendChild(mkImg(a.url, 1 - op, null));
+        svg.appendChild(mkImg(b.url, op, blendMode));
+        $('canvas').appendChild(svg);
 
-    $('thumbs').innerHTML = [a, b].map(v => `
+        $('thumbs').innerHTML = [a, b].map(v => `
       <div class="thumb-wrap">
         <div class="thumb"><img src="${v.url}" crossorigin="anonymous"></div>
         <div class="thumb-label">${v.title.replace('File:','')}</div>
       </div>
     `).join('');
 
-    setStatus(useSeed ? `seed ${djb2(query)} → hue ${t.hue}° rot ${t.rotate}° scale ${t.scale.toFixed(2)}` : '');
-  } catch(e) {
-    setStatus('error: ' + e.message);
-    console.error(e);
-  }
+        setStatus(useSeed ? `seed ${djb2(query)} → hue ${t.hue}° rot ${t.rotate}° scale ${t.scale.toFixed(2)}` : '');
+      } catch (e) {
+        setStatus('error: ' + e.message);
+        console.error(e);
+      }
 
-  $('btn').disabled = false;
-}
+      $('btn').disabled = false;
+    }
 
-$('btn').addEventListener('click', blend);
-$('q').addEventListener('keydown', e => e.key === 'Enter' && blend());
-</script>
+    $('btn').addEventListener('click', blend);
+    $('q').addEventListener('keydown', e => e.key === 'Enter' && blend());
+
+  </script>
 </body>
+
 </html>
